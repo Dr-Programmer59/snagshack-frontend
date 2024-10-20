@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&display=swap");
+
+body {
+  background-color: #000;
+  color: #fff;
+}
+
+.fade-out-text {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background: linear-gradient(
+    to right,
+    #171717 20%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #171717 20%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    #171717 20%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  overflow: hidden;
+}
+
+/* Hide scrollbar but allow scrolling */
+body {
+  overflow: scroll;
+  scrollbar-width: none; /* Firefox */
+  overflow-x: hidden;
+}
+
+/* Chrome, Safari, Edge, Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  /* For most modern browsers */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
