@@ -18,7 +18,7 @@ export default function SignupPage({ closeModal, changeForm }) {
     const router = useRouter();
 
   const handleRedirect = () => {
-    router.push('/desktop'); // Client-side redirect to /new-page
+    router.push('/'); // Client-side redirect to /new-page
   };
     const handleSignup = async() => {
         console.log('Sign up', { name, email, password });

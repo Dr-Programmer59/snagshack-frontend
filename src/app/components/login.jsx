@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { login } from '../lib/actions/user';
 import { redirect } from 'next/dist/server/api-utils';
 
+import { useRouter } from 'next/navigation';
 
 
 
@@ -15,11 +16,17 @@ export default function LoginPage({ closeModal, changeForm }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const router = useRouter();
 
+    const handleRedirect = () => {
+        router.push('/'); // Client-side redirect to /new-page
+      };
     const handleLogin = async() => {
         console.log('Login', { email, password });
         let res=await dispatch(login(email,password))
-        console.log("login response is ",res)
+        if(res){
+            handleRedirect()
+        }
         // Implement your login logic here
     };
 
