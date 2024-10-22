@@ -5,12 +5,13 @@ import { X, Mail, Lock } from 'lucide-react';
 import Button from './button';
 import InputFieldLabel from './label-input';
 import { useDispatch } from 'react-redux'
-import { login } from '../lib/actions/user';
+import { loadme, login } from '../lib/actions/user';
 import { redirect } from 'next/dist/server/api-utils';
 
 import { useRouter } from 'next/navigation';
 
-
+import { toast,Bounce  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LoginPage({ closeModal, changeForm }) {
     const [email, setEmail] = useState('');
@@ -22,11 +23,57 @@ export default function LoginPage({ closeModal, changeForm }) {
         router.push('/'); // Client-side redirect to /new-page
       };
     const handleLogin = async() => {
-        console.log('Login', { email, password });
-        let res=await dispatch(login(email,password))
-        if(res){
-            handleRedirect()
+            try{
+            console.log('Login', { email, password });
+            let res=await dispatch(login(email,password))
+            if(res){
+                toast.success('Login sucessfully!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                    });
+                
+                setTimeout(async() => {
+                    closeModal();
+                    await dispatch(loadme())
+                    handleRedirect()
+
+                }, 1000);
+            }
+            else{
+                toast.error('Please check your credentials', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                    });
+            }
         }
+        catch(err){
+            toast.error('Please check your credentials', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+        }
+    
         // Implement your login logic here
     };
 

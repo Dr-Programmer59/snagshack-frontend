@@ -1,18 +1,20 @@
 "use client";
 import { useRouter } from 'next/navigation';
-
+import { toast,Bounce  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useState } from 'react';
 import { X, Mail, Lock, User } from 'lucide-react';
 import InputFieldLabel from './label-input';
 import Button from './button';
 import { useDispatch } from 'react-redux'
-import { register } from '../lib/actions/user';
+import { register ,loadme} from '../lib/actions/user';
 import { redirect, usePathname } from 'next/navigation'
 
 export default function SignupPage({ closeModal, changeForm }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [acceptTOS, setacceptTOS] = useState(false)
     const dispatch = useDispatch();
     // const router = useRouter();
     const router = useRouter();
@@ -21,14 +23,73 @@ export default function SignupPage({ closeModal, changeForm }) {
     router.push('/'); // Client-side redirect to /new-page
   };
     const handleSignup = async() => {
+        try{
+        if(!acceptTOS){
+            toast.error('Accept Terms and Services to Proceed ', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+                return
+        }
         console.log('Sign up', { name, email, password });
         // Implement your signup logic here
         let res=await dispatch(register({name,email,password}))
         console.log("signing response ",res)
 
         if(res){
-            handleRedirect()
+            toast.success('SignUp sucessfully!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+            
+            setTimeout(async() => {
+                closeModal();
+                await dispatch(loadme())
+                handleRedirect()
+
+            }, 1000);
         }
+        else{
+            toast.error('Please check your credentials!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+        }
+    }
+    catch(err){
+        toast.error('Please check your credentials!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+            });
+    }
     };
 
     return (
@@ -63,7 +124,15 @@ export default function SignupPage({ closeModal, changeForm }) {
                         onChange={(e) => setPassword(e.target.value)}
                         icon={<Lock size={20} className="text-white/60" />}
                     />
-
+ 
+ <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="terms" onClick={()=>{setacceptTOS(!acceptTOS)}} aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required=""/>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="terms" class="font-light text-gray-500 dark:text-gray-300">I accept the <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="/terms-and-services" target='_blank'>Terms and Conditions</a></label>
+                      </div>
+                  </div>                
                     <Button
                         onClick={handleSignup}
                         name="Sign Up"

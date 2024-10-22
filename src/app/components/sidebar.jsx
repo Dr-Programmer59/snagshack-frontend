@@ -10,6 +10,7 @@ import Link from 'next/link';
 
 export default function Component({ isOpen, setIsOpen }) {
     const [isLargeScreen, setIsLargeScreen] = useState(true)
+    
 
     useEffect(() => {
         const handleResize = () => {
@@ -43,14 +44,14 @@ export default function Component({ isOpen, setIsOpen }) {
                 <Image src={Logo} alt="logo" height={52} width={52} className="h-[52px] w-[52px]" />
                 <p className="font-bold text-[17px] leading-[18px] ml-2">SnagBot</p>
             </span>
-
-            <span className="flex flex-row w-full leading-[19px] items-center my-[25px]">
             <Link href="/pricing">
+            <span className="flex flex-row w-full leading-[19px] items-center my-[25px]">
+            
                 <Image src={PricingTag} alt="pricing-tag" height={19} width={19} className="h-[19px] w-[19px] mr-2" />
                 Explore Pricing
-            </Link>
+            
             </span>
-
+            </Link>
             <span className="flex flex-col gap-y-[2px] my-3">
                 <span className="font-bold text-[14px] text-white">Today</span>
                 <ul>

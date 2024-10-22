@@ -13,7 +13,7 @@ import PricingCard from "../../components/pricing-card";
 import SuggestionCard from "../../components/suggestion-card";
 import Footer from "../../components/footer";
 import PricingTable from '../../components/pricing-table'
-
+import CheckoutButton from "@/app/components/CheckoutButton";
 {
   /*Images*/
 }
@@ -21,17 +21,18 @@ import Burger from "../../../../public/burger.png";
 import Cash from "../../../../public/cash.png";
 import Building from "../../../../public/building.png";
 import Art from "../../../../public/art.png";
+import { useSelector } from 'react-redux';
 
 const details = [
   {
     path: Burger,
     title: "Feeling Hungry",
-    description: "Let us pick our top reccomendations",
+    description: "Enjoy discounted food now!",
   },
   {
     path: Cash,
-    title: "Feeling Cheap",
-    description: "Let us pick our top reccomendations",
+    title: "Sign up now",
+    description: "Don’t miss out on these amazing promos!.",
   },
   {
     path: Building,
@@ -47,14 +48,14 @@ const details = [
 
 const Page = () => {
   const [isMonthly, setIsMonthly] = useState(true);
-
+  const { user } = useSelector(store => store.userReducer);
   const handleToggle = () => {
     setIsMonthly((prev) => !prev);
   };
 
   const pricingData = [
     { name: "Basic", monthlyPrice: 59, yearlyPrice: 100 },
-    // { name: "Pro", monthlyPrice: 30, yearlyPrice: 300 },
+     { name: "Coming Soon", monthlyPrice: 30, yearlyPrice: 300 },
   ];
 
   return (
@@ -62,10 +63,10 @@ const Page = () => {
       <Navbar />
       <div className="flex flex-col gap-y-5 mt-[60px]">
         <Heading text="Our Pricing " />
-        <Text
+        {/* <Text
           content="Lorem ipsum dolor set amet consectetur adipsicing dolor set"
           customClass="text-center"
-        />
+        /> */}
         {/* <div className="flex justify-center items-center w-full h-auto">
           <PricingSwitch isMonthly={isMonthly} onToggle={handleToggle} />
         </div> */}
@@ -88,8 +89,7 @@ const Page = () => {
         ))}
       </div>
 
-
-      <PricingTable />
+      {/* <PricingTable /> */}
 
 
       <Heading text="Choose your adventure today" customClass="mb-3" />

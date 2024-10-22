@@ -13,33 +13,36 @@ import Burger from '../../../public/burger.png'
 import Art from '../../../public/art.png'
 import Cash from '../../../public/cash.png'
 import Building from '../../../public/building.png'
-
+import LoginPage from "./login";
+import SignupPage from "./signup";
+import Modal from "./modal";
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react"
 import { useDispatch } from 'react-redux'
 import { fetchEmail } from '../lib/actions/user';
+import Form from "./form"
 
 const details = [
     {
         path: Burger,
         title: 'Feeling Hungry',
-        description: 'Let us pick our top recommendations'
+        description: 'Enjoy discounted food now!'
     },
     {
         path: Cash,
-        title: 'Feeling Cheap',
-        description: 'Let us pick our top recommendations'
+        title: 'Sign up now!',
+        description: 'Don’t miss out on these amazing promos!.'
     },
     {
-        path: Building,
-        title: 'Stressed Out',
-        description: 'Let us pick our top recommendations'
+        path: '',
+        title: 'Coming Soon',
+        description: ''
     },
     {
-        path: Art,
-        title: 'Feeling Creative',
-        description: 'Let us pick our top recommendations'
+        path: '',
+        title: 'Coming Soon',
+        description: ''
     },
 ]
 
@@ -49,9 +52,25 @@ const ContentBox = () => {
     const { user } = useSelector(store => store.userReducer);
     const [currentEmail, setcurrentEmail] = useState("")
     const dispatch = useDispatch();
+    const [isOpen, setIsOpen] = useState(false); // State to handle navbar open/close
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showForm, setShowForm] = useState('login')
     
+    useEffect(() => {
+      console.log(user)
+    
+      
+    }, [])
+    
+    const toggleNavbar = () => {
+        setIsOpen(!isOpen); // Toggle the navbar
+    };
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    }
     const fetchOTP=async (email)=>{
-        let res=await axios.post(`${process.env.SMTP_PUBLIC_BACKEND_URL}/check-otp`,{email})
+        let res=await axios.post(`${process.env.NEXT_PUBLIC_SMTP_URL}/check-otp`,{email})
         if(res){
             // print(res.data.otp)
             console.log(res.data.otp)
@@ -197,7 +216,8 @@ const ContentBox = () => {
         console.log(responsereq.replace(/```/g,"").replace("json","").replace("JSON",""))
         const jsonAnswer=JSON.parse(responsereq.replace(/```/g,"").replace("json","").replace("JSON",""))
 
-        if(jsonAnswer.keyword=="food_snag"){
+        if(jsonAnswer.keyword=="food_snag" ){
+            if(user.subscription_plan){
            let email= await fetchEmail();
            
            if(email){
@@ -206,13 +226,20 @@ const ContentBox = () => {
 
             setcurrentEmail(email)
            }
+          
            else{
             setMessages([...messages,{msg:"Your daily limit reached. Please ask for email tommorow.","role":"bot"}])
+
+           }
+        }
+        else if (!user.subscription_plan){
+            setMessages([...messages,{msg:"please subscribe to get coupan email","role":"bot"}])
 
            }
 
 
         }
+        
         else if (jsonAnswer.keyword=="otp_snag"){
             if(currentEmail!=""){
                 let otp=await fetchOTP(currentEmail)
@@ -224,6 +251,10 @@ const ContentBox = () => {
                 setMessages([...messages,{msg:"Please get email first , then ask for OTP.","role":"bot"}])
             }
            
+        }
+        else{
+            setMessages([...messages,{msg:jsonAnswer.answer,"role":"bot"}])
+
         }
 
         } catch (error) {
@@ -278,8 +309,20 @@ const ContentBox = () => {
                                         <Text content="Lorem ipsum dolor set amet consectetur adipsicing dolor set" customClass="text-center" />
 
                                         <div className="flex flex-wrap gap-5 justify-center ">
-                                            <Button name="Create Account" customClass="h-[49px] w-[265px] bg-primary text-black font-bold" />
-                                            <Button name="Login" customClass="h-[49px] w-[265px] bg-black text-white font-light border border-white/30" />
+                                            <Button name="Create Account" customClass="h-[49px] w-[265px] bg-primary text-black font-bold"
+                                            
+                                            onClick={() => {
+                                                setShowForm('signup');
+                                                toggleModal();
+                                            }}
+                                            />
+                                            <Button name="Login" customClass="h-[49px] w-[265px] bg-black text-white font-light border border-white/30" 
+                                            
+                                            onClick={() => {
+                                                setShowForm('login');
+                                                toggleModal();
+                                            }}
+                                            />
                                         </div>
 
                                     </div>
@@ -321,6 +364,27 @@ const ContentBox = () => {
             <button className="fixed right-5 bottom-20 bg-primary h-[45px] w-[45px] rounded-full border-none text-black flex justify-center items-center md:hidden">
                 <Image alt="help-logo" src={Help} className="h-[32px] w-[31px]" />
             </button>
+
+
+            {isModalOpen &&
+
+                <>
+                {
+                user ?
+                        <Modal onClose={toggleModal}>
+                            <Form closeModal={toggleModal} />
+                        </Modal>
+                        :
+                        <Modal onClose={toggleModal}>
+                            {showForm === 'login' ?
+                                <LoginPage closeModal={toggleModal} changeForm={setShowForm} />
+                                :
+                                <SignupPage closeModal={toggleModal} changeForm={setShowForm} />
+                            }
+                        </Modal>
+                }
+                    
+                    </>}
         </div>
     )
 }

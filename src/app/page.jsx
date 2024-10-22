@@ -14,7 +14,7 @@ const Page = () => {
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
       <div className={`flex flex-col w-full ml-[260px] md:ml-0 transition-all duration-300 hide-scrollbar`}>
-        <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
+        <Header isOpen={isOpen} setIsOpen={setIsOpen} />
         <ContentBox />
       </div>
     </div>

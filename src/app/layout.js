@@ -2,6 +2,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import StoreProvider from "./components/StoreProvider";
 import UserProvider from "./components/UserProvider";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // import the CSS styles
+
 const ginto = localFont({
   src: "./fonts/ABCGintoNord-Regular-Trial-BF651b7b7309b43.woff",
   variable: "--font-ginto-mono",
@@ -19,6 +22,7 @@ export default function RootLayout({ children }) {
       <body className={` hide-scrollbar ${ginto.variable} antialiased`}>
         <StoreProvider>
           <UserProvider>
+            <ToastContainer />
         {children}
         </UserProvider>
         </StoreProvider>

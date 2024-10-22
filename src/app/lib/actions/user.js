@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 import { ForgotUserFai, ForgotUserReq, ForgotUserSuc, LoadUserFai, LoadUserReq, LoadUserSuc, LoginUserFai, LoginUserReq, LoginUserSuc, LogoutUserFai, LogoutUserReq, LogoutUserSuc, OTPUserFai, OTPUserReq, OTPUserSuc, PrayingFai, PrayingReq, PrayingSuc, RegisterUserFai, RegisterUserReq, RegisterUserSuc, ResterUserFai, ResterUserSuc, UpdateUserFai, UpdateUserReq, UpdateUserSuc, createAdsFai, createAdsReq, createAdsSuc, getAdsFai, getAdsReq, getAdsSuc } from '../ActionType';
 
@@ -15,6 +16,22 @@ export const fetchEmail=async()=>{
 
 }
 
+export const updateSubscription = async (session_id) => {
+    try {
+      
+        let res = await api.post(`/update-subscription`,{session_id});
+        if (res) {
+            console.log("ok done");
+            return true
+
+        }
+        return false
+    } catch (error) {
+        console.error("Error updating subscription:", error);
+        return false
+
+    }
+};
 export const login = (email,password) => async (dispatch) => {
     try {
         dispatch({

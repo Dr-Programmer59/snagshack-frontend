@@ -19,7 +19,7 @@ import Burger from '../../../public/burger.png'
 import Cash from '../../../public/cash.png'
 import Building from '../../../public/building.png'
 import Art from '../../../public/art.png'
-
+import Link from 'next/link';
 const details = [
     {
         path: Burger,
@@ -58,7 +58,7 @@ const Header = ({ isOpen, setIsOpen }) => {
 
     return (
         <div className="flex flex-row justify-between items-center border-b-[#fff]/10 border-b-[2px] text-white py-[15px] w-full max-w-[1446px] px-[10px] md:px-[20px]">
-
+            <Link href="/">
             {/* Logo and name */}
             <span className="md:flex flex-row items-center hidden">
 
@@ -66,7 +66,7 @@ const Header = ({ isOpen, setIsOpen }) => {
 
                 <p className="font-ginto text-[17px] font-bold leading-[18px] ml-2 block ">SnagBot</p>
             </span>
-
+            </Link>
             <p className="font-abz text-white font-medium text-[17px] leading-[17px] h-[17px] md:hidden w-[130px]">Chat Bot</p>
 
 
@@ -81,26 +81,36 @@ const Header = ({ isOpen, setIsOpen }) => {
                 }
             </div>
 
-
-            <span className="flex items-center md:hidden">
+            {user?
+            <span className="flex flexitems-center md:hidden">
                 {/* <Button name="Login" customClass="bg-[#000] text-[#fff] font-thin" onClick={() => { setIsFormModalOpen(true) }} /> */}
 
 
                 {/*User name */}
                 <p className="font-inter text-[14px] text-white font-semibold mr-2">
-                    {user?user.name:" "}
+                   {user.name}
                 </p>
-
+               
                 <Image
-                    src={PlaceHolder}
-                    alt="image-placeholder"
-                    height="34"
-                    width="34"
-                    className="hover:cursor-pointer"
-                    onClick={toggleModal}
-                />
-            </span>
+                src={PlaceHolder}
+                alt="image-placeholder"
+                height="34"
+                width="34"
+                className="hover:cursor-pointer"
+                onClick={toggleModal}
+            />
+           
+            <>
+            
 
+            
+            </>
+                
+                
+            </span>
+             :
+             ""
+             }
 
 
 

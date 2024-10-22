@@ -58,10 +58,10 @@ const Navbar = () => {
     return (
         <nav className="flex flex-row justify-between border-b-[#fff]/10 border-b-[0.5px] text-white py-[10px] w-full max-w-[1446px] px-[20px]">
             {/* Logo and name */}
-            <span className="flex flex-row justify-center items-center w-auto px-5 md:px-[10px] ">
+            {/* <span className="flex flex-row justify-center items-center w-auto px-5 md:px-[10px] ">
                 <Image src={Logo} alt="logo" className="h-[52px] w-[52px] md:h-[36px] md:w-[36px]" />
                 <p className="font-ginto text-[17px] font-bold leading-[18px] ml-2">SnagBot</p>
-            </span>
+            </span> */}
 
             {/* Links and Buttons - Visible on larger screens */}
             <span className="flex md:hidden flex-row gap-x-[30px] w-full items-center px-[70px]">
