@@ -18,20 +18,8 @@ import Form from "./form";
 const Links = [
     {
         name: "Home",
-        href: "",
-    },
-    {
-        name: "Features",
-        href: "",
-    },
-    {
-        name: "Pricing",
-        href: "",
-    },
-    {
-        name: "Contact",
-        href: "",
-    },
+        href: "/",
+    }
 ];
 
 const Navbar = () => {

@@ -52,7 +52,7 @@ export default function Component({ isOpen, setIsOpen }) {
             
             </span>
             </Link>
-            <span className="flex flex-col gap-y-[2px] my-3">
+            {/* <span className="flex flex-col gap-y-[2px] my-3">
                 <span className="font-bold text-[14px] text-white">Today</span>
                 <ul>
                     {['Best Taco near me on budget', 'Cheapest sushi restaurant', 'Top rated Italian place', 'Vegan options nearby'].map((item, index) => (
@@ -72,7 +72,7 @@ export default function Component({ isOpen, setIsOpen }) {
                         </li>
                     ))}
                 </ul>
-            </span>
+            </span> */}
         </div>
     )
 }

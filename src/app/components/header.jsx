@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "./button";
 import Image from "next/image";
 import Form from "./form";
@@ -20,33 +20,26 @@ import Cash from '../../../public/cash.png'
 import Building from '../../../public/building.png'
 import Art from '../../../public/art.png'
 import Link from 'next/link';
-const details = [
-    {
-        path: Burger,
-        title: 'Feeling Hungry',
-    },
-    {
-        path: Cash,
-        title: 'Feeling Cheap',
+import { toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-    },
-    {
-        path: Building,
-        title: 'Stressed Out',
-    },
-    {
-        path: Art,
-        title: 'Feeling Creative?',
-    },
-
-
-]
-
-const Header = ({ isOpen, setIsOpen }) => {
+const Header = ({ isOpen, setIsOpen ,messages,setMessages,inputValue,setinputValue}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFormModalOpen, setIsFormModalOpen] = useState(false);
     const [showForm, setShowForm] = useState('login')
     const {user} = useSelector(store => store.userReducer);
+    const [previewUrl, setPreviewUrl] = useState(null);
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    useEffect(() => {
+      if(user){
+        setName(user?.name)
+        setEmail(user?.email)
+        setPreviewUrl(`${process.env.NEXT_PUBLIC_BACKEND_URL}${user?.avatar}`)
+
+      }
+   
+    }, [user])
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
     };
@@ -55,7 +48,62 @@ const Header = ({ isOpen, setIsOpen }) => {
         setShowForm('login')
         setIsFormModalOpen(!isFormModalOpen);
     };
+    const details = [
+        {
+            path: Burger,
+            title: 'Feeling Hungry',
+            onSubmit:()=>{
+              
+                    console.log("working")
+                    setinputValue("Send me Food")
+                    setMessages([...messages,{msg:"Send me Food","role":"user"}])
+                }
+        
+    },
+        {
+            path: Cash,
+            title: 'Sign Up Now',
+            onSubmit:()=>{
+                if(user){
+                    toast.info('Account is created Already.', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark",
+                        transition: Bounce,
+                    });
+                }
+                else{
+                    toggleFormModal()
+                    
+                }
+            }
+            
+    
+        },
+        {
+            path: Building,
+            title: 'Coming Soon',
+            onSubmit:()=>{
+                
+            }
+          
+            
+        },
+        {
+            path: Art,
+            title: 'Coming Soon',
+            onSubmit:()=>{
 
+            }
+        },
+    
+    
+    ]
     return (
         <div className="flex flex-row justify-between items-center border-b-[#fff]/10 border-b-[2px] text-white py-[15px] w-full max-w-[1446px] px-[10px] md:px-[20px]">
             <Link href="/">
@@ -76,29 +124,28 @@ const Header = ({ isOpen, setIsOpen }) => {
             <div className="flex flex-row gap-3 justify-start px-[5px] md:hidden overflow-scroll hide-scrollbar mx-[20px]">
                 {
                     details.map((detail) => {
-                        return <HeaderSuggestionCard imgPath={detail.path} title={detail.title} />
+                        return <HeaderSuggestionCard imgPath={detail.path} title={detail.title} onSubmit={detail.onSubmit}/>
                     })
                 }
             </div>
 
             {user?
-            <span className="flex flexitems-center md:hidden">
+            <span className="flex  items-center md:hidden">
                 {/* <Button name="Login" customClass="bg-[#000] text-[#fff] font-thin" onClick={() => { setIsFormModalOpen(true) }} /> */}
 
 
                 {/*User name */}
-                <p className="font-inter text-[14px] text-white font-semibold mr-2">
+                <p className="font-inter text-[14px]  text-white font-semibold mr-2">
                    {user.name}
                 </p>
                
-                <Image
-                src={PlaceHolder}
-                alt="image-placeholder"
-                height="34"
-                width="34"
-                className="hover:cursor-pointer"
-                onClick={toggleModal}
-            />
+                <div className="w-[50px] h-[50px] md:h-[30px] md:w-[30px]  bg-white rounded-full mb-2 flex items-center justify-center overflow-hidden">
+                {previewUrl ? (
+                    <img src={previewUrl} alt="Profile" className="w-full h-full object-cover"   onClick={toggleModal} />
+                ) : (
+                    <span className="text-gray-500 text-4xl"></span>
+                )}
+            </div>
            
             <>
             

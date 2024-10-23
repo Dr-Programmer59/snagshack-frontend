@@ -180,11 +180,13 @@ export const updateUser = (formData) => async (dispatch) => {
         dispatch({
             type: UpdateUserSuc,...data
         })
+        return true
     } catch (error) {
         dispatch({
             type: UpdateUserFai,
             message: error?.response?.data?.message
         })
+        return false
     }
 }
 

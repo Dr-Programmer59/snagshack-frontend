@@ -5,7 +5,8 @@ import Pointer from "../../../public/pointer.png";
 import Image from "next/image";
 import CheckoutButton from "./CheckoutButton";
 import { useSelector } from 'react-redux';
-
+import { toast,Bounce  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const details = [
     "Up to 2 uber eats accounts per day",
 "Minimum of 2 $20 uber eats promos", 
@@ -19,7 +20,7 @@ const PricingCard = ({ name, price, duration, buttonCustomClass = "", customClas
     console.log(productId)
     return (
         <div
-            className={`flex flex-col items-center w-full max-w-[400px] min-w-[300px] h-[415px] text-white px-[30px] pl-[40px] py-[50px] rounded-[20px] border  bg-[#171717] hover:cursor-pointer ${name === 'Pro' ? 'border-primary' : 'border-white/10'} ${customClass}`}
+            className={`flex flex-col items-center w-full max-w-[400px] min-w-[300px] h-[500px] text-white px-[30px] pl-[40px] py-[50px] rounded-[20px] border  bg-[#171717] hover:cursor-pointer ${name === 'Pro' ? 'border-primary' : 'border-white/10'} ${customClass}`}
         >
             {name!="Coming Soon"?
             <>
@@ -31,7 +32,7 @@ const PricingCard = ({ name, price, duration, buttonCustomClass = "", customClas
                    / per {duration}
                </span>
            </p>
-            
+                
            <CheckoutButton productId={"price_1QCDvX1OGUJyl9WfkdBzx9io"} />
             
 

@@ -1,28 +1,16 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { X, Upload } from 'lucide-react';
 import Button from './button';
 import InputField from './input-field';
+import { toast,Bounce  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux'
+import { updateUser } from '../lib/actions/user';
 
 
-
-const ProfilePicture = ({ src, onUpload }) => (
-    <div className="flex flex-row sm:flex-row items-center m-6 gap-x-4 gap-y-4">
-        <div className="w-[88px] h-[88px] md:h-[54px] md:w-[54px]  bg-white rounded-full mb-2 flex items-center justify-center overflow-hidden">
-            {src ? (
-                <img src={src} alt="Profile" className="w-full h-full object-cover" />
-            ) : (
-                <span className="text-gray-500 text-4xl"></span>
-            )}
-        </div>
-
-        <button onClick={onUpload} className="w-full max-w-[213px]  bg-[#222222] h-[54px] flex justify-center items-center font-inter font-medium text-[15px] text-white/60 rounded-[16px]">
-            <Upload size={19} className="mr-2 text-white" />
-            Upload Profile Icon
-        </button>
-    </div>
-);
 
 const Membership = ({ plan, daysLeft }) => (
     <div className="mt-6 w-full">
@@ -49,13 +37,118 @@ export default function Form({ closeModal }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [profilePic, setProfilePic] = useState('');
+    const { user } = useSelector(store => store.userReducer);
+    const dispatch = useDispatch();
+    const fileInputRef = useRef(null);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(null);
 
-    const handleUpload = () => {
-        console.log('Upload profile picture');
+    useEffect(() => {
+      if(user){
+        setName(user?.name)
+        setEmail(user?.email)
+        setPreviewUrl(`${process.env.NEXT_PUBLIC_BACKEND_URL}${user?.avatar}`)
+
+      }
+   
+    }, [user])
+    
+
+  
+    const handleClick = () => {
+        fileInputRef.current.click(); // Programmatically click the hidden input
+      };
+      
+    const ProfilePicture = ({ src, onUpload }) => (
+        <div className="flex flex-row sm:flex-row items-center m-6 gap-x-4 gap-y-4">
+            <div className="w-[88px] h-[88px] md:h-[54px] md:w-[54px]  bg-white rounded-full mb-2 flex items-center justify-center overflow-hidden">
+                {src ? (
+                    <img src={src} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                    <span className="text-gray-500 text-4xl"></span>
+                )}
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              ref={fileInputRef}
+              style={{ display: 'none' }} // Hide the input
+            />
+            <button onClick={handleClick} className="w-full max-w-[213px]  bg-[#222222] h-[54px] flex justify-center items-center font-inter font-medium text-[15px] text-white/60 rounded-[16px]">
+                <Upload size={19} className="mr-2 text-white" />
+                Upload Profile Icon
+            </button>
+        </div>
+    );
+    // Function to handle file selection
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
+      setSelectedFile(file);
+  
+      // Preview the image before upload
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+
     };
 
-    const handleSave = () => {
-        console.log('Save changes', { name, email });
+    const handleSave = async() => {
+        try{
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            if (selectedFile) {
+            formData.append('file', selectedFile);
+            }
+        // console.log('Save changes', { name, email });
+        const res=await dispatch(updateUser(formData))
+        if(res){
+            toast.success('Updated sucessfully!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+            
+           
+        }
+        else{
+            toast.error('Some problem occurs. Try again later! :(', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+        }
+    }
+    catch(err){
+        toast.error('Some problem occurs. Try again later! :(', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+            });
+            console.log(err)
+    }
+    
     };
 
     return (
@@ -68,7 +161,7 @@ export default function Form({ closeModal }) {
                     </button>
                 </div>
 
-                <ProfilePicture src={profilePic} onUpload={handleUpload} />
+                <ProfilePicture src={previewUrl} onUpload={handleFileChange} />
 
                 <InputField label="Full Name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
 

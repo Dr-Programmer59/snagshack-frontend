@@ -23,28 +23,7 @@ import Building from "../../../../public/building.png";
 import Art from "../../../../public/art.png";
 import { useSelector } from 'react-redux';
 
-const details = [
-  {
-    path: Burger,
-    title: "Feeling Hungry",
-    description: "Enjoy discounted food now!",
-  },
-  {
-    path: Cash,
-    title: "Sign up now",
-    description: "Don’t miss out on these amazing promos!.",
-  },
-  {
-    path: Building,
-    title: "Stressed Out",
-    description: "Let us pick our top reccomendations",
-  },
-  {
-    path: Art,
-    title: "Feeling Creative",
-    description: "Let us pick our top reccomendations",
-  },
-];
+
 
 const Page = () => {
   const [isMonthly, setIsMonthly] = useState(true);
@@ -52,7 +31,47 @@ const Page = () => {
   const handleToggle = () => {
     setIsMonthly((prev) => !prev);
   };
-
+  const details = [
+    {
+      path: Burger,
+      title: "Feeling Hungry",
+      description: "Enjoy discounted food now!",
+    },
+    {
+      path: Cash,
+      title: "Sign up now",
+      description: "Don’t miss out on these amazing promos!.",
+      onSubmit:()=>{
+        if(user){
+            toast.info('Account is created Already.', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+        }
+        else{
+            toggleFormModal()
+            
+        }
+    }
+    },
+    {
+      path: Building,
+      title: "Coming Soon",
+      description: "",
+    },
+    {
+      path: Art,
+      title: "Coming Soon",
+      description: "",
+    },
+  ];
   const pricingData = [
     { name: "Basic", monthlyPrice: 59, yearlyPrice: 100 },
      { name: "Coming Soon", monthlyPrice: 30, yearlyPrice: 300 },
@@ -100,6 +119,7 @@ const Page = () => {
               imgPath={detail.path}
               title={detail.title}
               description={detail.description}
+              onSubmit={details.onSubmit}
             />
           );
         })}

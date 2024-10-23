@@ -4,7 +4,7 @@ import StoreProvider from "./components/StoreProvider";
 import UserProvider from "./components/UserProvider";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // import the CSS styles
-
+import CrispChat from "./components/CrispChat";
 const ginto = localFont({
   src: "./fonts/ABCGintoNord-Regular-Trial-BF651b7b7309b43.woff",
   variable: "--font-ginto-mono",
@@ -23,6 +23,7 @@ export default function RootLayout({ children }) {
         <StoreProvider>
           <UserProvider>
             <ToastContainer />
+            <CrispChat/>
         {children}
         </UserProvider>
         </StoreProvider>
