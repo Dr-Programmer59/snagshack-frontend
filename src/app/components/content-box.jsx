@@ -317,7 +317,7 @@ const details = [
 
    
     const fetchData = async (question) => {
-        if("vcc" in question.lower()) {
+        if(question.toLowerCase().includes("vcc")) {
             setMessages(prevMessages => [...prevMessages, {msg: vccGuide, "role": "bot"}]);
             return
         }
