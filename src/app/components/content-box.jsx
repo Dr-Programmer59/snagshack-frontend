@@ -29,7 +29,7 @@ const ContentBox = ({messages,setMessages,inputValue,setinputValue}) => {
     const { user } = useSelector(store => store.userReducer);
     const [currentEmail, setcurrentEmail] = useState("")
     const dispatch = useDispatch();
-    const [isOpen, setIsOpen] = useState(false); // State to handle navbar open/close
+    const [isOpen, setIsOpen] = useState(false); // State to handhle navbar open/close
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showForm, setShowForm] = useState('login')
     const router = useRouter();
@@ -203,7 +203,7 @@ Do I need a VPN? Yes, we highly recommend using a VPN to prevent any issues with
                 ]
               }, {
                 headers: {
-                  'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OEPN_AI_KEY}`,
+                  'Authorization':  process.env.NEXT_PUBLIC_OEPN_AI_KEY,
                   'Content-Type': 'application/json'
                 }
               });
