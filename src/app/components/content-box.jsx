@@ -203,7 +203,7 @@ Do I need a VPN? Yes, we highly recommend using a VPN to prevent any issues with
                 ]
               }, {
                 headers: {
-                  'Authorization': `Bearer sk-wyVYQNrdeAuVa-pk9vS31g1HgLYZ3L4yrdeBkQZ7yBT3BlbkFJ2RdgnfvXwpaVJIwME5RtpYXrDLIFp7moyyCvs8nNUA`,
+                  'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OEPN_AI_KEY}`,
                   'Content-Type': 'application/json'
                 }
               });
@@ -218,8 +218,13 @@ Do I need a VPN? Yes, we highly recommend using a VPN to prevent any issues with
         jsonAnswer=JSON.parse(responsereq.replace(/```/g,"").replace("json","").replace("JSON",""))
         }
         catch{
+            try{
         jsonAnswer=JSON.parse(responsereq.substring(input.indexOf("{")));
-            
+            }
+            catch{
+                setMessages([...messages,{msg:responsereq,"role":"bot"}])
+                return
+            }
 
         }
         if(jsonAnswer.keyword=="food_snag" ){
