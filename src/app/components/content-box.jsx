@@ -164,6 +164,52 @@ const computerGuide=(
       </p>
     </div>
   );
+  const vccGuide = (
+    <div className="space-y-4 text-base text-white-700">
+      <p>
+        <strong className="font-bold">What is a VCC?</strong>
+        <br />
+        A Virtual Credit Card (VCC) is like a regular credit card but digital. Instead of getting a physical card you can hold, a VCC gives you a special card number to use when shopping online. It helps keep your real credit card information safe by giving stores a temporary number instead of the one on your actual card. You can use it for one-time payments or subscriptions, and then the number can disappear or change.
+      </p>
+      <p>
+        <strong className="font-bold">Here’s how you can use a VCC:</strong>
+        <ol className="list-decimal list-inside ml-4">
+          <li>Sign up for a VCC provider (some are free, others might charge a small fee).</li>
+          <li>Get a virtual card number from the provider, which works just like a regular credit card number.</li>
+          <li>Use the VCC number when you're shopping online. Enter it like you would any regular credit card number.</li>
+          <li>Check your account to make sure you have enough money on the card, and complete your purchase!</li>
+        </ol>
+      </p>
+      <p>
+        <strong className="font-bold">What does SnagShack recommend you use?</strong>
+        <br />
+        SnagShack recommends you use APPLE CARD; everyone on iOS 17.4+ has access to APPLE VCC.
+      </p>
+      <p>
+        <strong className="font-bold">How to set up Apple VCC:</strong>
+        <ol className="list-decimal list-inside ml-4">
+          <li>Open the Wallet app, then tap your Apple Cash card.</li>
+          <li>Tap the More button, then tap Card Number.</li>
+          <li>Tap Set Up Virtual Card Number, then tap Continue.</li>
+          <li>Authenticate with Face ID, Touch ID, or your passcode.</li>
+          <li>Tap Done.</li>
+        </ol>
+        <a href="https://support.apple.com/en-us/119943" className="text-blue-500 underline" target="_blank" rel="noopener noreferrer">Learn more</a>
+      </p>
+      <p>
+        <strong className="font-bold">Alternative Options: Top 3 VCC providers in the United States:</strong>
+        <ol className="list-decimal list-inside ml-4">
+          <li><a href="https://privacy.com" className="text-blue-500 underline" target="_blank" rel="noopener noreferrer">Privacy</a></li>
+          <li><a href="https://www.revolut.com" className="text-blue-500 underline" target="_blank" rel="noopener noreferrer">Revolut</a></li>
+          <li><a href="https://www.portebanking.com" className="text-blue-500 underline" target="_blank" rel="noopener noreferrer">Evolve Bank & Trust (Porte)</a></li>
+        </ol>
+        These companies let you create virtual credit cards that help you stay safe when buying things online!
+      </p>
+    </div>
+  );
+  
+
+  
 const ContentBox = ({messages,setMessages,inputValue,setinputValue}) => {
     const { user } = useSelector(store => store.userReducer);
     const [currentEmail, setcurrentEmail] = useState("")
@@ -271,7 +317,10 @@ const details = [
 
    
     const fetchData = async (question) => {
-       
+        if("vcc" in question.lower()) {
+            setMessages(prevMessages => [...prevMessages, {msg: vccGuide, "role": "bot"}]);
+            return
+        }
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/gpt-result`,{messages,question});
          
         //   setResponseData(response.data);
