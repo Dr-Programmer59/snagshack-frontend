@@ -280,18 +280,14 @@ const details = [
         console.log(responsereq.replace(/```/g,"").replace("json","").replace("JSON",""))
         let jsonAnswer
         try{
-        jsonAnswer=JSON.parse(responsereq.replace(/```/g,"").replace("json","").replace("JSON",""))
+            jsonAnswer=JSON.parse(responsereq.substring(responsereq.indexOf("{")));
         }
-        catch{
-            try{
-        jsonAnswer=JSON.parse(responsereq.substring(input.indexOf("{")));
-            }
-            catch{
+       catch{
                 setMessages([...messages,{msg:responsereq,"role":"bot"}])
                 return
             }
 
-        }
+        
         if(jsonAnswer.keyword=="food_snag" ){
           
             if(user?.subscription_plan){
@@ -305,7 +301,7 @@ const details = [
            }
           
            else{
-            setMessages([...messages,{msg:"Your daily limit reached. Please ask for email tommorow.","role":"bot"}])
+            setMessages([...messages,{msg:"Hi your daily limit has been reached. Please come back tomorrow for some more food!","role":"bot"}])
 
            }
         }
@@ -400,7 +396,7 @@ const details = [
 
                                     <div className="flex flex-col gap-y-5 items-center px-[20px]">
                                         <Heading text="Meet the Snag Bot " />
-                                        <Text content="Lorem ipsum dolor set amet consectetur adipsicing dolor set" customClass="text-center" />
+                                        <Text content="Snag A Deal At The Shack!" customClass="text-center" />
 
                                         <div className="flex flex-wrap gap-5 justify-center ">
                                             <Button name="Create Account" customClass="h-[49px] w-[265px] bg-primary text-black font-bold"
