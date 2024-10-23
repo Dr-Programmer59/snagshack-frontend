@@ -91,7 +91,7 @@ const Page = () => {
         </div> */}
       </div>
 
-      <div className="w-full flex flex-row justify-center items-center gap-x-[40px] flex-wrap p-[20px] gap-y-5">
+      <div className="w-full flex flex-row justify-center items-center gap-x-[40px] flex-wrap p-[20px] gap-y-5 mb-20">
         {pricingData.map((plan, index) => (
           <PricingCard
             key={index}
@@ -111,7 +111,7 @@ const Page = () => {
       {/* <PricingTable /> */}
 
 
-      <Heading text="Choose your adventure today" customClass="mb-3" />
+      {/* <Heading text="Choose your adventure today" customClass="mb-3" />
       <div className="flex flex-wrap gap-5 justify-center px-[10px] py-[50px]">
         {details.map((detail) => {
           return (
@@ -123,7 +123,7 @@ const Page = () => {
             />
           );
         })}
-      </div>
+      </div> */}
       <Footer />
     </div>
   );

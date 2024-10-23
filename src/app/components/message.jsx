@@ -9,7 +9,7 @@ import { useState } from "react"
 import { ThumbsUp, ThumbsDown, Flag, Clipboard, Repeat } from "lucide-react"
 
 
-const Message = ({ sender, message }) => {
+const Message = ({ sender, message,attachment }) => {
 
     const [activeIcon, setActiveIcon] = useState(null);
 
@@ -32,7 +32,12 @@ const Message = ({ sender, message }) => {
                     <div className={`px-[20px] py-[15px] bg-[#171717] rounded-[10px] ${sender === 'bot' ? 'rounded-bl-none' : 'rounded-br-none'}`}>
                         <p className="font-inter font-medium text-[14px] text-white/80 leading-[19px]">{message}</p>
                     </div>
-
+                    {attachment=="video"?
+                        <video src="video guide.mp4" controls/>
+                        :""
+                    
+                }
+                  
                     {/*Action Buttons only is the sender is the bot*/}
                     {sender === 'bot' && (
                         <span className="flex flex-row gap-x-[10px]">
@@ -63,7 +68,7 @@ const Message = ({ sender, message }) => {
                             />
                         </span>
                     )}
-
+                   
                 </div>
 
             </div>

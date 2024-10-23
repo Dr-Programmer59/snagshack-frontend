@@ -25,6 +25,145 @@ import Form from "./form"
 import { useRouter } from 'next/navigation';
 import { toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { OpenAi } from "./OpenAiReq"
+const mobileGuide=(
+    <div className="space-y-4 text-base text-white">
+      <p>
+        <strong className="font-bold">Here’s a quick and simple guide to ordering food using SnagShack’s bot on your phone. Let’s get started!</strong>
+      </p>
+      <p>
+        <strong className="font-bold">1. Pick Your Mobile Browser & Turn on VPN</strong>
+        <br />
+        First things first, don’t use the Uber Eats app! It won’t work for this. Instead, use one of these mobile browsers:
+        <ul className="list-disc list-inside ml-4">
+          <li>Brave Browser (Private Mode)</li>
+          <li>DuckDuckGo Browser (Private Mode)</li>
+        </ul>
+        Now, before you start ordering, turn on your VPN. A VPN hides your location, so Uber Eats won’t know where you are. Connect to any state in the USA. Here are two VPNs we recommend:
+        <ul className="list-disc list-inside ml-4">
+          <li>Mullvad VPN</li>
+          <li>Proton VPN</li>
+        </ul>
+        Make sure the VPN is running before you move on!
+      </p>
+      <p>
+        <strong className="font-bold">2. Login to Uber Eats (Using the Browser)</strong>
+        <br />
+        Once your VPN is on, open the Uber Eats website using your mobile browser. Remember, don’t use the Uber Eats app; the browser is your best friend here! 
+        <br />
+        Now, log in with the account provided by SnagShack. If you’re not sure how, check the video guide for a walkthrough.
+      </p>
+      <p>
+        <strong className="font-bold">3. Claim Your Promo Code</strong>
+        <br />
+        Once you’re logged in, you should see a promo code available for the account. Just accept it. This discount will save you money when you order!
+      </p>
+      <p>
+        <strong className="font-bold">4. Choose Your Restaurant</strong>
+        <br />
+        Now it’s time to pick what you want to eat. Scroll through Uber Eats and select any restaurant you like. Almost all restaurants are available, so choose whatever you’re craving!
+      </p>
+      <p>
+        <strong className="font-bold">5. Add Food to Your Cart</strong>
+        <br />
+        Add the items you want to your cart. Once you’re done, head to checkout.
+        <br />
+        <span className="italic">Tip: Your total should be under $5 after fees if you haven’t gone over the coupon value. Double-check your order total to make sure!</span>
+      </p>
+      <p>
+        <strong className="font-bold">6. Add a Virtual Credit Card (VCC)</strong>
+        <br />
+        When you’re at the checkout page, you’ll need to add a Virtual Credit Card (VCC). This is the card you’ll use to pay. Here are two easy VCC options:
+        <ul className="list-disc list-inside ml-4">
+          <li>Apple Cash VCC</li>
+          <li>Porte Bank VCC</li>
+        </ul>
+        You can find instructions for setting up a VCC in SnagShack’s guide. It’s super simple, so don’t worry!
+      </p>
+      <p>
+        <strong className="font-bold">7. Set the Tip</strong>
+        <br />
+        To make sure your order gets picked up fast, set the tip to $1. This will ensure someone grabs your order while still keeping your total cost low.
+      </p>
+      <p>
+        <strong className="font-bold">8. Place Your Order</strong>
+        <br />
+        Now that everything’s ready, hit Place Order! Your total should be under $5, and your food will be on its way. Enjoy the savings!
+      </p>
+      <p>
+        <strong className="font-bold">9. Bonus: Place Another Order</strong>
+        <br />
+        Each account has two promos! After your first order, you can place a second one. Just follow the same steps again and enjoy another meal for less than $5.
+      </p>
+    </div>
+  );
+const computerGuide=(
+    <div className="space-y-4 text-base text-white">
+      <p>
+        <strong className="font-bold">1. Choose a Browser & Turn on Your VPN</strong>
+        <br />
+        First, you’ll need to use a browser that keeps you private. Here are your best options:
+        <ul className="list-disc list-inside ml-4">
+          <li>Chrome Guest Mode</li>
+          <li>Brave Private Browser</li>
+          <li>DuckDuckGo Browser</li>
+        </ul>
+        Next, turn on your VPN (a tool that hides your location) and pick a place in the USA to connect. We suggest using:
+        <ul className="list-disc list-inside ml-4">
+          <li>Mullvad VPN</li>
+          <li>Proton VPN</li>
+        </ul>
+        This is just to make sure everything goes smoothly!
+      </p>
+      <p>
+        <strong className="font-bold">2. Log Into Your Uber Eats Account</strong>
+        <br />
+        Now that your VPN is on, log in to the Uber Eats account you got from SnagShack. If you’re not sure how, there’s a video that shows you what to do. It’s super easy!
+      </p>
+      <p>
+        <strong className="font-bold">3. Get Your Promo Code</strong>
+        <br />
+        After logging in, there should be a promo code (a discount) waiting for you. Just click to accept it, and now you’re ready to save some cash!
+      </p>
+      <p>
+        <strong className="font-bold">4. Pick Your Favorite Food!</strong>
+        <br />
+        Time to eat! Pick any store you like on Uber Eats. Almost any restaurant is available, so you can choose your favorite foods.
+      </p>
+      <p>
+        <strong className="font-bold">5. Add Food to Your Cart</strong>
+        <br />
+        Look through the menu and add your favorite items to your cart. Then, go to checkout.
+        <br />
+        <span className="italic">Tip: Make sure your total after fees is under $5. If it’s more than that, you might have gone over the promo limit.</span>
+      </p>
+      <p>
+        <strong className="font-bold">6. Add a Virtual Credit Card (VCC)</strong>
+        <br />
+        When you’re ready to pay, you’ll need to add a Virtual Credit Card (VCC). It’s like a special online card that you can use just for this. You can get one from:
+        <ul className="list-disc list-inside ml-4">
+          <li>Apple Cash</li>
+          <li>Porte Bank</li>
+        </ul>
+        Check out the SnagShack guide if you need help. It’s super simple to set up!
+      </p>
+      <p>
+        <strong className="font-bold">7. Change the Tip</strong>
+        <br />
+        Before you place your order, make sure to set the tip to $1 so someone will pick up your food. This way, your meal still costs under $5 but gets delivered quickly!
+      </p>
+      <p>
+        <strong className="font-bold">8. Place Your Order</strong>
+        <br />
+        Hit Place Order! Yay! Now you’ve got a whole meal for under $5. Pretty awesome, right?
+      </p>
+      <p>
+        <strong className="font-bold">9. Bonus Round: Place Another Order!</strong>
+        <br />
+        Guess what? You can place another order with the same account! Just go back and do everything again because each account has two promos. So, double the food fun!
+      </p>
+    </div>
+  );
 const ContentBox = ({messages,setMessages,inputValue,setinputValue}) => {
     const { user } = useSelector(store => store.userReducer);
     const [currentEmail, setcurrentEmail] = useState("")
@@ -33,6 +172,23 @@ const ContentBox = ({messages,setMessages,inputValue,setinputValue}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showForm, setShowForm] = useState('login')
     const router = useRouter();
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      const handleResize = () => {
+        // Set breakpoint, e.g., 768px for mobile devices
+        setIsMobile(window.innerWidth <= 768);
+      };
+  
+      // Call function on component mount
+      handleResize();
+  
+      // Add event listener for window resize
+      window.addEventListener('resize', handleResize);
+  
+      // Cleanup event listener on component unmount
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
 const details = [
     {
         path: Burger,
@@ -41,7 +197,8 @@ const details = [
         onSubmit:()=>{
             console.log("working")
             setinputValue("Send me Food")
-            setMessages([...messages,{msg:"Send me Food","role":"user"}])
+            setMessages(prevMessages => [...prevMessages, {msg:"Send me Food","role":"user"}]);
+          
         }
     },
     {
@@ -64,7 +221,7 @@ const details = [
                     });
                 }
                 else{
-                    toggleFormModal()
+                    toggleModal()
                     
                 }
             
@@ -115,103 +272,11 @@ const details = [
    
     const fetchData = async (question) => {
        
-            const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-                model: 'gpt-3.5-turbo', // or the latest model
-                messages: [
-                  {
-                    role: 'system',
-                    content: `
-                SnagShack is a subscription service offering exclusive access to discounts and promotional codes for a variety of services. Our goal is to help you save on everyday needs, from food deliveries to online resources, while keeping the process simple and user-friendly. Here's how it works:
-Please be professional,comprehensive so that our customer will understand everything. Make sure he don't get bored. Here we have some few more parameters to make sure 
-add emojis as required
-I will give u sample question and answer so that you can understand what we are trying to do. don't give same answers rewrite by urself add required emojis. make professional answer. match the customer vibes.. and just be expressive
- Response Format: Always return answers in JSON format with the following fields, Don't add any thing else outside of json:
-
-    json
-
-    {
-    "answer": "Provide a 4-5 line response, include emojis to engage the user",
-    "attachment": "video or null depending on whether a guide/video is necessary",
-    "keyword": "determine based on the query"
-    }
-    Emojis: Add emojis to make the responses fun and engaging (e.g., food-related emojis for food queries, padlock or shield for security topics, etc.). Use friendly and conversational language to enhance user interaction.
-
-    Keywords:
-    Note: only add keyword when we have food in our text. or like we have otp. Don't add irrelevant stick to ur work only.  And if user write give me otp .send me otp then do send.. don't add keyword everytime like u add keyword when user ask like how we can get otp? so at this time u just give them answer from FAQ
-    For food, or anything related Don't add food_snag every time. just when user say i need food. I want food. send me food ... so only that time(e.g., "I need food", "FOOD"), set "keyword": "food_snag". Example response: "Ok, sir! 🍕 We are sending your Uber Eats account. 🍔 Enjoy your meal!"
-    For OTP or verification code queries (e.g., "give me otp", "send me otp", ), set "keyword": "otp_snag". Example response: "We’ve got your back! 🔐 Your OTP code is  📩"
-    Note: Don't set otp_snag if user ask question like how i can get otp or somethingl ike that.. only send when user ask to get otp not when he questioned.
-    For "SUBSCRIBE" and other related things. If user write want to scubscribe, Subscribe  or something like set "keyword" :"subscribe_snag". Make sure to return json nothing else. Answer the user . okay we are ridirecting to our plans. 
-    Note : Don't set keyword when user ask how to subscribe or something like that only if user write "want to subscribe" Subscribe
-    Attachment:
-
-    If the question requires additional guidance or tutorial videos (like placing an order, using a VCC, or setting up a VPN), set "attachment": "video".
-    Otherwise, set "attachment": null.
-  
-
-
-Plain FAQS
-
-What is SnagShack? SnagShack is your go-to platform for saving money! We provide access to discounts on popular services, ensuring you get the best value every day. Enjoy special offers and deals tailored to meet your needs.
-
-How much does SnagShack cost? Our subscription is priced at $59 per month for the Lite plan, which includes access to discounts worth $20-$30 each, providing at least $80 in value every day. It’s a cost-effective way to save more while spending less.
-
-How do I use SnagShack for my orders? Simply type 'FOOD' in the chat, and we’ll send you all the details needed to place an order. It’s quick and easy! We also provide video tutorials to help guide you through the process if needed.
-
-How many accounts can I generate daily? With our Lite plan, you can generate two accounts each day, each offering fantastic savings to make sure you never miss out on deals.
-
-How do I get an OTP code? For verification, just type 'Verify' in the chat and provide your account email. Wait a minute, and then press 'I sent OTP'. We’ll send your code immediately!
-
-Do I need a virtual credit card (VCC)? Yes! A virtual credit card is necessary to complete your orders. If you need help setting one up, simply type 'VCC INFO' in the chat, and we’ll provide guides to assist you.
-
-How do I cancel my subscription? You can cancel your subscription anytime through your account settings. Once canceled, your access will remain active until the end of your billing cycle. If you need help, type 'SUPPORT' in the chat.
-
-Is there a referral program? While our referral program isn’t public yet, stay tuned! We’ll let you know as soon as it becomes available.
-
-Do you offer a free trial? Currently, we don’t offer a free trial. However, SnagShack provides such great savings that it more than justifies the subscription cost.
-
-What if I have issues with my account? If you’re experiencing any issues, just type 'SUPPORT' in the chat. We’re here to assist you and usually resolve issues the same day.
-
-What does the Lite plan include? The Lite plan gives you access to two daily accounts along with detailed guides to help you place orders easily.
-
-How can I upgrade to the Pro plan? The Pro plan is coming soon! Stay tuned for more details and an even better experience.
-
-How do I find out which services are available? You can easily see all the services we offer by typing '/services' in the chat. We’re constantly updating our list to provide more options!
-
-What browsers should I use? For the best experience, use Chrome Guest or Brave private mode on desktop. For mobile users, DuckDuckGo or Brave in private mode is recommended. Make sure to clear your cookies after each session to ensure smooth performance.
-
-Can I get a refund? We don’t offer refunds once a subscription is processed. However, you can cancel at any time to prevent future charges.
-
-How do I get a virtual credit card (VCC)? You can easily get a VCC by creating a bank account or using an Apple Cash VCC if you’re an iPhone user. We offer guides to help you through the setup.
-
-Do I need a VPN? Yes, we highly recommend using a VPN to prevent any issues with account bans. Free options like Proton VPN are available, but we suggest Mullvad VPN for better reliability at $5 per month. We provide step-by-step guides for VPN setup as well.
-                  
-
-
-
-
-`
-                  },
-                  ...messages.map(msg => ({
-                    role: msg.role === 'user' ? 'user' : 'assistant',
-                    content: msg.msg
-                  })),
-                  {
-                    role: 'user',
-                    content: question
-                  }
-                ]
-              }, {
-                headers: {
-                  'Authorization':  process.env.NEXT_PUBLIC_OEPN_AI_KEY,
-                  'Content-Type': 'application/json'
-                }
-              });
-        
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/gpt-result`,{messages,question});
          
         //   setResponseData(response.data);
         console.log("before data ",response)
-        let responsereq=response.data.choices[0].message.content
+        let responsereq=response.data.res.choices[0].message.content
         console.log(responsereq.replace(/```/g,"").replace("json","").replace("JSON",""))
         let jsonAnswer
         try{
@@ -228,6 +293,7 @@ Do I need a VPN? Yes, we highly recommend using a VPN to prevent any issues with
 
         }
         if(jsonAnswer.keyword=="food_snag" ){
+          
             if(user?.subscription_plan){
            let email= await fetchEmail();
            
@@ -265,13 +331,26 @@ Do I need a VPN? Yes, we highly recommend using a VPN to prevent any issues with
            
         }
         else if (jsonAnswer.keyword=="subscribe_snag"){
+            setMessages([...messages,{msg:jsonAnswer.answer,"role":"bot"}])
             setTimeout(() => {
                 router.push('/pricing');
-            }, 1000);
+            }, 2000);
         }
         else{
-            setMessages([...messages,{msg:jsonAnswer.answer,"role":"bot"}])
+            setMessages(prevMessages => [...prevMessages, {msg: jsonAnswer.answer, "role": "bot", attachment: jsonAnswer.attachment}]);
 
+            setTimeout(() => {
+                if(jsonAnswer.attachment && jsonAnswer.attachment === "video") {
+                    if(isMobile) {
+                        // Update the state using the function form to avoid overwriting
+                        setMessages(prevMessages => [...prevMessages, {msg: mobileGuide, "role": "bot"}]);
+                    } else {
+                        // Update the state using the function form to avoid overwriting
+                        setMessages(prevMessages => [...prevMessages, {msg: computerGuide, "role": "bot"}]);
+                    }
+                }
+            }, 2000);
+            
         }
 
         
@@ -279,7 +358,7 @@ Do I need a VPN? Yes, we highly recommend using a VPN to prevent any issues with
 
     const onSubmit=()=>{
        
-        setMessages([...messages,{msg:inputValue,"role":"user"}])
+        setMessages([...messages,{msg:inputValue,"role":"user",}])
         
       
     
@@ -358,7 +437,7 @@ Do I need a VPN? Yes, we highly recommend using a VPN to prevent any issues with
                             <div className="w-full flex flex-col gap-y-2 md:gap-y-4">
                                 {
                                     messages.map((value)=>(
-                                        <Message sender={value.role} message={value.msg} />
+                                        <Message sender={value.role} message={value.msg} attachment={value.attachment}/>
                                     ))
                                 }
                                 
