@@ -10,9 +10,11 @@ const greetingMessage = (
     <p className="font-bold text-lg">👋 Welcome to SnagShack Bot!</p>
     <p>We are here to assist you. Use the following commands to get started:</p>
     <ul className="list-disc pl-6">
-      <li><strong>FOOD</strong> : to get your coupan account 🍔</li>
+      <li><strong>FOOD</strong> : to get your coupon account 🍔</li>
       <li><strong>OTP &lt;email&gt;</strong> : to get OTP for specific email. Example: <strong>OTP xyz@snagshack.shop</strong> ✉️</li>
       <li><strong>GUIDE</strong> : to get a proper GUIDE on how you can get offers, etc. 📖</li>
+      <li><strong>VCC</strong> : Simply type “VCC” to receive a complete guide on where and how to get a Virtual Credit Card.</li>
+    
     </ul>
   </div>
 );

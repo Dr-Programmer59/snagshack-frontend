@@ -7,11 +7,14 @@ import CheckoutButton from "./CheckoutButton";
 import { useSelector } from 'react-redux';
 import { toast,Bounce  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const details = [
-    "Up to 2  accounts per day",
-"Minimum of 2 $20  promos", 
+    "Unlock up to 2 exclusive accounts each day!",
+"Each account comes with double savings: at least two $20 off promos, and some accounts surprise you with $25 or even $30 promos!", 
 "Access to full guides on how to place orders and get the most value ",
- "Some accounts have 2 $20 off promos some have 2 $25 off some $30 promos"
+"Accounts surprise you with $25 or even $30 promos!", 
+"Enjoy over $80 in daily savings — that’s serious value!",
+ "Stack up to $2,400 or more in monthly savings!"
 ];
 
 const PricingCard = ({ name, price, duration, buttonCustomClass = "", customClass = "" }) => {
@@ -20,7 +23,7 @@ const PricingCard = ({ name, price, duration, buttonCustomClass = "", customClas
     console.log(productId)
     return (
         <div
-            className={`flex flex-col items-center w-full max-w-[400px] min-w-[300px] h-[500px] text-white px-[30px] pl-[40px] py-[50px] rounded-[20px] border  bg-[#171717] hover:cursor-pointer ${name === 'Pro' ? 'border-primary' : 'border-white/10'} ${customClass}`}
+            className={`flex flex-col items-center w-full max-w-[400px] min-w-[300px] h-[610px] text-white px-[30px] pl-[40px] py-[50px] rounded-[20px] border  bg-[#171717] hover:cursor-pointer ${name === 'Pro' ? 'border-primary' : 'border-white/10'} ${customClass}`}
         >
             {name!="Coming Soon"?
             <>

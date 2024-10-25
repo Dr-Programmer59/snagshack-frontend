@@ -323,7 +323,7 @@ const details = [
 
    
     const fetchData = async (question) => {
-        if(question.toLowerCase().includes("vcc")) {
+        if(question.trim()=="VCC") {
             setMessages(prevMessages => [...prevMessages, {msg: vccGuide, "role": "bot"}]);
             return
         }
@@ -343,7 +343,7 @@ const details = [
             }
 
         
-        if(question=="FOOD" ){
+        if(question.trim()=="FOOD" ){
           
             if(user?.subscription_plan){
            let email= await fetchEmail();
