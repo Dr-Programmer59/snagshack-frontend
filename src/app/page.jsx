@@ -5,10 +5,20 @@ import Sidebar from "./components/sidebar";
 import Header from "./components/header";
 import ContentBox from "./components/content-box";
 import Navbar from "@/app/components/navbar";
-
+const greetingMessage = (
+  <div className="text-white text-base leading-relaxed">
+    <p className="font-bold text-lg">👋 Welcome to SnagShack Bot!</p>
+    <p>We are here to assist you. Use the following commands to get started:</p>
+    <ul className="list-disc pl-6">
+      <li><strong>FOOD</strong> : to get your coupan account 🍔</li>
+      <li><strong>OTP &lt;email&gt;</strong> : to get OTP for specific email. Example: <strong>OTP xyz@snagshack.shop</strong> ✉️</li>
+      <li><strong>GUIDE</strong> : to get a proper GUIDE on how you can get offers, etc. 📖</li>
+    </ul>
+  </div>
+);
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([{"role":"bot",msg:greetingMessage}])
   const [inputValue, setinputValue] = useState("")
  
 

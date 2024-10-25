@@ -50,17 +50,6 @@ const Header = ({ isOpen, setIsOpen ,messages,setMessages,inputValue,setinputVal
     };
     const details = [
         {
-            path: Burger,
-            title: 'Feeling Hungry',
-            onSubmit:()=>{
-              
-                    console.log("working")
-                    setinputValue("Send me Food")
-                    setMessages([...messages,{msg:"Send me Food","role":"user"}])
-                }
-        
-    },
-        {
             path: Cash,
             title: 'Sign Up Now',
             onSubmit:()=>{
@@ -86,10 +75,24 @@ const Header = ({ isOpen, setIsOpen ,messages,setMessages,inputValue,setinputVal
     
         },
         {
-            path: Building,
-            title: 'Coming Soon',
+            path: Burger,
+            title: 'Feeling Hungry',
             onSubmit:()=>{
-                
+              
+                    console.log("working")
+                    setinputValue("FOOD")
+                    setMessages([...messages,{msg:"FOOD","role":"user"}])
+                }
+        
+    },
+        {
+            path: Building,
+            title: 'GUIDE ME',
+            onSubmit:()=>{
+              
+                console.log("working")
+                setinputValue("GUIDE")
+                setMessages([...messages,{msg:"GUIDE","role":"user"}])
             }
           
             

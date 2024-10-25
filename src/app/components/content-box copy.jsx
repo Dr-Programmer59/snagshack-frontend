@@ -268,7 +268,7 @@ const details = [
         description: 'Enjoy discounted food now!',
         onSubmit:()=>{
             console.log("working")
-            setinputValue("FOOD")
+            setinputValue("Send me Food")
             setMessages(prevMessages => [...prevMessages, {msg:"FOOD","role":"user"}]);
           
         }
@@ -281,7 +281,7 @@ const details = [
         onSubmit:()=>{
             console.log("working")
             console.log("working")
-            setinputValue("GUIDE")
+            setinputValue("Send me Food")
             setMessages(prevMessages => [...prevMessages, {msg:"GUIDE","role":"user"}]);
             
         }
@@ -311,9 +311,7 @@ const details = [
         setIsModalOpen(!isModalOpen);
     }
     const fetchOTP=async (email)=>{
-      console.log("checking email",email)
         let res=await axios.post(`${process.env.NEXT_PUBLIC_SMTP_URL}/check-otp`,{email})
-        console.log(res)
         if(res){
             // print(res.data.otp)
             console.log(res.data.otp)
@@ -343,13 +341,13 @@ const details = [
             }
 
         
-        if(question=="FOOD" ){
+        if(jsonAnswer.keyword=="food_snag" ){
           
             if(user?.subscription_plan){
            let email= await fetchEmail();
            
            if(email){
-            setMessages([...messages,{msg:`🍕 We’re sending your account now. Need help with ordering? Type 'GUIDE' for a quick guide. 🍔 Enjoy your meal!
+            setMessages([...messages,{msg:`${jsonAnswer.answer} 
             ${email}`,"role":"bot"}])
 
             setcurrentEmail(email)
@@ -369,17 +367,16 @@ const details = [
 
         }
         
-        else if (question.includes("OTP")){
-              try{
-
-                let otp=await fetchOTP(question.replace("OTP","").trim())
-                setMessages([...messages,{msg:`We 've got your back! 🔐 Your OTP code is  📩
+        else if (jsonAnswer.keyword=="otp_snag"){
+            if(currentEmail!=""){
+                let otp=await fetchOTP(currentEmail)
+                setMessages([...messages,{msg:`${jsonAnswer.answer} 
                     ${otp}`,"role":"bot"}])
                 setcurrentEmail("")
-              }
-              catch{
-                setMessages([...messages,{msg:`We are unable to get OTP. Please try later`,"role":"bot"}])
-              }
+            }
+            else{
+                setMessages([...messages,{msg:"Please get email first , then ask for OTP.","role":"bot"}])
+            }
            
         }
         else if (jsonAnswer.keyword=="subscribe_snag"){
@@ -388,25 +385,20 @@ const details = [
                 router.push('/pricing');
             }, 2000);
         }
-        else if(question.trim()=="GUIDE"){
-          setMessages(prevMessages => [...prevMessages, {msg: jsonAnswer.answer, "role": "bot", attachment: "video"}]);
-
-          setTimeout(() => {
-           
-                if(isMobile) {
-                    // Update the state using the function form to avoid overwriting
-                    setMessages(prevMessages => [...prevMessages, {msg: mobileGuide, "role": "bot"}]);
-                } else {
-                    // Update the state using the function form to avoid overwriting
-                    setMessages(prevMessages => [...prevMessages, {msg: computerGuide, "role": "bot"}]);
-                
-            }
-        }, 2000);
-        }
         else{
-            setMessages(prevMessages => [...prevMessages, {msg: jsonAnswer.answer, "role": "bot", attachment: null}]);
+            setMessages(prevMessages => [...prevMessages, {msg: jsonAnswer.answer, "role": "bot", attachment: jsonAnswer.attachment}]);
 
-           
+            setTimeout(() => {
+                if(jsonAnswer.attachment && jsonAnswer.attachment === "video") {
+                    if(isMobile) {
+                        // Update the state using the function form to avoid overwriting
+                        setMessages(prevMessages => [...prevMessages, {msg: mobileGuide, "role": "bot"}]);
+                    } else {
+                        // Update the state using the function form to avoid overwriting
+                        setMessages(prevMessages => [...prevMessages, {msg: computerGuide, "role": "bot"}]);
+                    }
+                }
+            }, 2000);
             
         }
 

@@ -22,8 +22,8 @@ const Membership = ({ plan, daysLeft }) => (
         </div>
 
         <div className="w-full bg-[#22222] rounded-full h-2.5 my-4 flex flex-row">
-            <div className="bg-primary h-[10px] rounded-full" style={{ width: '25%' }}></div>
-            <div className="bg-[#222222] h-[10px] rounded-full" style={{ width: '75%' }}></div>
+            <div className="bg-primary h-[10px] rounded-full" style={{ width: `${((30 - daysLeft) / 30) * 100}%` }}></div>
+            <div className="bg-[#222222] h-[10px] rounded-full" style={{ width: `${(daysLeft / 30) * 100}%` }}></div>
         </div>
 
         <div className="flex justify-between text-sm">
@@ -42,12 +42,26 @@ export default function Form({ closeModal }) {
     const fileInputRef = useRef(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
-
+    const [daysleft, setdaysleft] = useState(0)
+    const [plan, setplan] = useState(null)
     useEffect(() => {
       if(user){
         setName(user?.name)
         setEmail(user?.email)
         setPreviewUrl(`${process.env.NEXT_PUBLIC_BACKEND_URL}${user?.avatar}`)
+        setplan(user?.subscription_plan)
+        console.log(user)
+        if(user?.subscription_plan=="basic"){
+            const currentDate = new Date();
+            const expiration = new Date(user.payment_time);
+
+            // Calculate the difference in days
+            const timeDiff = expiration - currentDate;
+            const daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+
+            setdaysleft(daysRemaining);
+        }
+    
 
       }
    
@@ -171,7 +185,7 @@ export default function Form({ closeModal }) {
                     <Button onClick={handleSave} customClass="bg-primary text-black h-[54px] font-inter text-[17px] font-semibold" name="Save Changes" />
                 </div>
 
-                <Membership plan="Basic" daysLeft={13} />
+                <Membership plan={plan?plan:"No Plan"} daysLeft={daysleft} />
             </div>
         </div>
     );

@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 
 const CheckoutButton = ({ productId }) => {
   const { user } = useSelector(store => store.userReducer);
+  console.log(`${process.env.NEXT_PUBLIC_STRIPE}`)
 const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE}`);
 
   
