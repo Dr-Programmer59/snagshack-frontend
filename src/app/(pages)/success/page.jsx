@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { updateSubscription } from '@/app/lib/actions/user';
+import { updateSubscription } from '../../lib/actions/user';
 import { loadStripe } from '@stripe/stripe-js';
 import { toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
