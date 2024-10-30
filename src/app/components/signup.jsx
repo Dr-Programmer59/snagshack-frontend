@@ -38,7 +38,7 @@ export default function SignupPage({ closeModal, changeForm }) {
                 });
                 return
         }
-        console.log('Sign up', { name, email, password });
+        console.log('Sign up', { name, email:email.toLowerCase(), password });
         // Implement your signup logic here
         let res=await dispatch(register({name,email,password}))
         console.log("signing response ",res)

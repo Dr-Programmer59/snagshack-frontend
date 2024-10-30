@@ -1,9 +1,9 @@
 import { EDGE_UNSUPPORTED_NODE_APIS } from 'next/dist/shared/lib/constants'
 import React from 'react'
 
-const Input = ({value,onChange,onSubmit}) => {
+const Input = () => {
     return (
-        <div className="flex items-center space-x-2 bg-foreground p-2 rounded-[100px] max-w-[896px] w-full h-[57px] md:w-[450px] md:mr-10">
+        <div className="flex items-center space-x-2 bg-foreground p-2 rounded-[100px] max-w-[896px] w-full h-[57px]">
             <svg
                 className="w-5 h-5 text-gray-400"
                 fill="none"
@@ -20,12 +20,10 @@ const Input = ({value,onChange,onSubmit}) => {
             </svg>
             <input
                 type="text"
-                value={value}
-                onChange={onChange}
                 placeholder="Begin by typing here..."
                 className="flex-grow bg-transparent border-none placeholder:text-white/40 text-white focus:outline-none font-inter text-[15px] font-medium"
             />
-            <button className="bg-primary hover:bg-primary/80 rounded-full p-3  focus:outline-none " onClick={onSubmit}>
+            <button className="bg-primary hover:bg-primary/80 rounded-full p-2 focus:outline-none">
                 <svg
                     className="w-4 h-4 text-black"
                     fill="none"

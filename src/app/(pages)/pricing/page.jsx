@@ -13,7 +13,6 @@ import PricingCard from "../../components/pricing-card";
 import SuggestionCard from "../../components/suggestion-card";
 import Footer from "../../components/footer";
 import PricingTable from '../../components/pricing-table'
-import CheckoutButton from "@/app/components/CheckoutButton";
 {
   /*Images*/
 }

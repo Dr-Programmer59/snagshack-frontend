@@ -18,7 +18,7 @@ const Message = ({ sender, message,attachment }) => {
     };
 
     return (
-        <div className={`flex ${sender === 'bot' ? 'flex-row' : 'flex-row-reverse'}`}>
+        <div className={`flex -z-20 ${sender === 'bot' ? 'flex-row' : 'flex-row-reverse'}`}>
 
             <div className={`flex flex-row  items-center gap-x-2  ${sender === 'bot' ? 'justify-start' : 'justify-end'} `}>
 

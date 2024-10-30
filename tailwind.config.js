@@ -15,8 +15,8 @@ module.exports = {
       screens: {
         sm: { max: "640px" }, // Max width for small devices like mobile phones
         md: { max: "768px" }, // Max width for tablets and small laptops
-        lg: { max: "1024px" }, // Max width for large tablets and laptops
-        xl: { max: "1280px" }, // Max width for desktops
+        // lg: { max: "1024px" }, // Max width for large tablets and laptops
+        lg: { max: "1280px" }, // Max width for desktops
         "2xl": { min: "1536px" }, // Min width for large desktops
       },
       fontFamily: {

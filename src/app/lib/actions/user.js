@@ -37,7 +37,7 @@ export const login = (email,password) => async (dispatch) => {
         dispatch({
             type: LoginUserReq,
         })
-
+        console.log(email,password)
         const {data} = await api.post('/login',{email,password});
         dispatch({
             type: LoginUserSuc,...data
@@ -125,11 +125,13 @@ export const logout = () => async (dispatch) => {
         dispatch({
             type: LogoutUserSuc,...data
         })
+        return true
     } catch (error) {
         dispatch({
             type: LogoutUserFai,
             message: error?.response?.data?.message
         })
+
     }
 }
 
@@ -140,14 +142,19 @@ export const forgot = (formData) => async (dispatch) => {
         })
 
         const {data} = await api.post('/forgot-password',formData);
+        console.log(data)
         dispatch({
             type: ForgotUserSuc,...data
         })
+        return true
     } catch (error) {
+        console.log(error)
         dispatch({
             type: ForgotUserFai,
             message: error?.response?.data?.message
         })
+       
+        return false
     }
 }
 
@@ -161,14 +168,32 @@ export const reset = (token,formData) => async (dispatch) => {
         dispatch({
             type: ResterUserSuc,...data
         })
+        return true
     } catch (error) {
         dispatch({
             type: ResterUserFai,
             message: error?.response?.data?.message
         })
+        return false
     }
 }
 
+export const changePassword = (formData) => async (dispatch) => {
+    try {
+       
+        
+        const {data} = await api.put(`/user/change-password`,formData);
+        if(data){
+            return true
+
+        }
+        else{
+            return false
+        }
+    } catch (error) {
+      return false
+    }
+}
 
 export const updateUser = (formData) => async (dispatch) => {
     try {

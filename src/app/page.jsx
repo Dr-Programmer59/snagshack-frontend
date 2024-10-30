@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import Sidebar from "./components/sidebar";
 import Header from "./components/header";
 import ContentBox from "./components/content-box";
-import Navbar from "@/app/components/navbar";
+// import Navbar from "@/app/components/navbar";
+import Navbar from "./components/navbar"
 const greetingMessage = (
   <div className="text-white text-base leading-relaxed">
     <p className="font-bold text-lg">👋 Welcome to SnagShack Bot!</p>
