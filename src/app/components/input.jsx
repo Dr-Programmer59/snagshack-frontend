@@ -1,9 +1,17 @@
 import { EDGE_UNSUPPORTED_NODE_APIS } from 'next/dist/shared/lib/constants'
 import React from 'react'
 
-const Input = () => {
+const Input = ({value,onChange,onSubmit}) => {
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+        
+          onSubmit()
+          // Add your submit logic here
+          event.preventDefault(); // Prevents any default action, like reloading the page
+        }
+      };
     return (
-        <div className="flex items-center space-x-2 bg-foreground p-2 rounded-[100px] max-w-[896px] w-full h-[57px]">
+        <div className="flex items-center space-x-2 bg-foreground p-2 rounded-[100px] max-w-[816px] w-full h-[57px] md:w-[450px] md:mr-10 ">
             <svg
                 className="w-5 h-5 text-gray-400"
                 fill="none"
@@ -20,10 +28,13 @@ const Input = () => {
             </svg>
             <input
                 type="text"
+                value={value}
+                onChange={onChange}
+                onKeyDown={handleKeyDown}
                 placeholder="Begin by typing here..."
                 className="flex-grow bg-transparent border-none placeholder:text-white/40 text-white focus:outline-none font-inter text-[15px] font-medium"
             />
-            <button className="bg-primary hover:bg-primary/80 rounded-full p-2 focus:outline-none">
+            <button className="bg-primary hover:bg-primary/80 rounded-full p-3  focus:outline-none " onClick={onSubmit}>
                 <svg
                     className="w-4 h-4 text-black"
                     fill="none"
